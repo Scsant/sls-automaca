@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaRobot, FaTimes, FaPaperPlane } from "react-icons/fa";
+import IAImage from "../assets/ia.jpg";
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -78,7 +79,7 @@ const styles = {
     right: "20px",
     width: "120px", // 🔥 Ajuste conforme necessário
     height: "50px",
-    backgroundImage: "url(/src/assets/ia.jpg)", // 🔥 Caminho da imagem
+    backgroundImage: `url(${IAImage})`, // 🔥 Caminho da imagem
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
