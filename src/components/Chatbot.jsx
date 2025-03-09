@@ -19,11 +19,17 @@ const Chatbot = () => {
     setInput("");
 
     try {
-      const response = await fetch("http://localhost:5000/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
-      });
+        const API_URL = "https://sls-automaca.vercel.app/chat"; // Use seu domínio do Vercel
+
+        fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: "O que é automação?" }),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data.reply))
+          .catch((err) => console.error("Erro ao conectar à IA!", err));
+        
 
       const data = await response.json();
       setMessages([...newMessages, { text: data.reply, sender: "bot" }]);
