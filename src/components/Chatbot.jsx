@@ -19,7 +19,7 @@ const Chatbot = () => {
     setInput("");
 
     try {
-      const response = await fetch("https://sls-automaca-git-main-socrates-luiz-dos-santos-projects.vercel.app//chat", {
+      const response = await fetch("http://localhost:5000/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
