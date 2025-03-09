@@ -19,7 +19,8 @@ const Chatbot = () => {
     setInput("");
 
     try {
-        const API_URL = "https://sls-automaca.vercel.app/chat"; // Use seu domínio do Vercel
+        const API_URL = "https://sls-automaca-git-main-socrates-luiz-dos-santos-projects.vercel.app/chat"; 
+
       
         const response = await fetch(API_URL, {
           method: "POST",
