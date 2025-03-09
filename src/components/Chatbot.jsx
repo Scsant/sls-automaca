@@ -19,26 +19,18 @@ const Chatbot = () => {
     setInput("");
 
     try {
-        const API_URL = "https://sls-automaca-git-main-socrates-luiz-dos-santos-projects.vercel.app/chat"; 
+      const response = await fetch("https://sls-automaca-git-main-socrates-luiz-dos-santos-projects.vercel.app//chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
 
-      
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: "O que é automação?" }),
-        });
-      
-        if (!response.ok) {
-          throw new Error("Erro na resposta da API");
-        }
-      
-        const data = await response.json();
-        setMessages([...newMessages, { text: data.reply, sender: "bot" }]);
-      } catch (error) {
-        console.error("Erro ao conectar à IA!", error);
-        setMessages([...newMessages, { text: "Erro ao conectar à IA!", sender: "bot" }]);
-      }
-  };      
+      const data = await response.json();
+      setMessages([...newMessages, { text: data.reply, sender: "bot" }]);
+    } catch (error) {
+      setMessages([...newMessages, { text: "Erro ao conectar à IA!", sender: "bot" }]);
+    }
+  };
 
   return (
     <>
