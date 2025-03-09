@@ -6,13 +6,15 @@ import Services from "./components/Services";
 import Projects from "./components/Projects";
 import Testimonials from "./components/Testimonials";
 import Contact from "./components/Contact";
-import ContextPage from "./pages/ContextPage"; // 🔥 Importa a nova página
+import ContextPage from "./pages/ContextPage"; // 🔥 Importa a página de contexto
+import AutomacaoProcessos from "./pages/AutomacaoProcessos"; // 🔥 Importa a nova página
+import Chatbot from "./components/Chatbot"; // 🔥 Importa o chatbot
 
 function App() {
   return (
     <Router>
       <Navbar />
-      <Routes>
+      <Routes  key={location.pathname}>
         {/* 🔥 Página principal */}
         <Route
           path="/"
@@ -30,7 +32,12 @@ function App() {
 
         {/* 🔥 Nova página de contexto */}
         <Route path="/contexto" element={<ContextPage />} />
+
+        {/* 🔥 Página Automação de Processos */}
+        <Route path="/automacao-processos" element={<AutomacaoProcessos />} />
       </Routes>
+      {/* 🔥 Adiciona o chatbot em todas as páginas */}
+      <Chatbot />
     </Router>
   );
 }

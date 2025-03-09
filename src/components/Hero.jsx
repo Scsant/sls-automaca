@@ -118,6 +118,26 @@ const styles = {
     boxShadow: "0px 4px 10px rgba(255, 152, 0, 0.4)",
     cursor: "pointer",
   },
+
+  /* 🔥 Estilos responsivos */
+  "@media (max-width: 768px)": {
+    textContainer: {
+      top: "60%", // 🔥 Ajusta posição no mobile
+      width: "90%",
+    },
+    overlayImage: {
+      width: "70%", // 🔥 Imagem menor em telas pequenas
+    },
+  },
+
+  "@media (min-width: 1600px)": {
+    container: {
+      padding: "8vh 10vw", // 🔥 Ajusta espaçamento em telas grandes
+    },
+    textContainer: {
+      top: "75%",
+    },
+  },
 };
 
 export default Hero;

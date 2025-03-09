@@ -24,7 +24,7 @@ const Navbar = () => {
 
   return (
     <nav style={{ ...styles.navbar, ...(isScrolled ? styles.navbarScrolled : {}) }}>
-      <div style={styles.logo}>🚀 SLS</div>
+      <div style={styles.logo}>SLS</div>
       <ul style={styles.navLinks}>
         {["hero", "services", "projects", "testimonials", "contato"].map((section) => (
           <li

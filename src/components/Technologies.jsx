@@ -69,7 +69,7 @@ const styles = {
     backgroundImage: `url(${BackgroundImage})`, // 🔥 Adiciona a imagem de fundo
     backgroundSize: "cover",
     backgroundPosition: "center",
-    opacity: 0.2, // 🔥 Deixa a imagem semi-transparente para não atrapalhar os ícones
+    opacity: 0.6, // 🔥 Deixa a imagem semi-transparente para não atrapalhar os ícones
     zIndex: -1, // 🔥 Mantém a imagem atrás de tudo
   },
   slider: {
