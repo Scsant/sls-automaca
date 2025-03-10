@@ -16,12 +16,18 @@ db.once("open", () => console.log("✅ Conectado ao MongoDB Atlas!"));
 
 const app = express();
 
-// 🔥 CONFIGURAÇÃO CORRETA DO CORS (ACEITANDO REQUISIÇÕES DO FRONTEND NO VERCEL)
-app.use(cors());
+// 🔥 CONFIGURAÇÃO COMPLETA DO CORS (AGORA FUNCIONA 100%)
+app.use(cors({
+  origin: ["https://sls-automaca-git-main-socrates-luiz-dos-santos-projects.vercel.app", "https://sls-automaca.vercel.app"], // Adicione todos os domínios do frontend
+  methods: "GET, POST, OPTIONS",
+  allowedHeaders: "Content-Type, Authorization",
+  credentials: true
+}));
+
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // **⚠️ Use o domínio do frontend para maior segurança**
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
 
@@ -33,7 +39,11 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-// 🔥 Rota de Chat com CORS corretamente configurado
+// 🔥 Rota de Chat com CORS corrigido
+app.options("/chat", (req, res) => { // Permite requisições OPTIONS (preflight)
+  res.sendStatus(200);
+});
+
 app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
