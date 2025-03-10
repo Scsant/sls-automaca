@@ -10,13 +10,19 @@ dotenv.config();
 
 mongoose.connect(process.env.MONGO_URI);
 
-
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "❌ Erro ao conectar no MongoDB"));
 db.once("open", () => console.log("✅ Conectado ao MongoDB Atlas!"));
 
 const app = express();
-app.use(cors());
+
+// 🔥 Configuração correta do CORS para permitir requisições do frontend
+app.use(cors({
+  origin: "*", // 🚨 **Ajuste para seu domínio específico para maior segurança**
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
+
 app.use(bodyParser.json());
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -55,4 +61,5 @@ app.post("/chat", async (req, res) => {
 });
 
 // 🔥 Servidor rodando
-app.listen(5000, () => console.log("🔥 Servidor rodando na porta 5000"));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🔥 Servidor rodando na porta ${PORT}`));
