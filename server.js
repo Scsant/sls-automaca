@@ -16,13 +16,14 @@ db.once("open", () => console.log("✅ Conectado ao MongoDB Atlas!"));
 
 const app = express();
 
-// 🔥 CONFIGURAÇÃO DE CORS PARA PERMITIR O FRONTEND NO VERCEL
-app.use(cors({
-  origin: "https://sls-automaca-git-main-socrates-luiz-dos-santos-projects.vercel.app", // ❗ Substitua pelo seu domínio correto
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type"],
-  credentials: true
-}));
+// 🔥 CONFIGURAÇÃO CORRETA DO CORS (ACEITANDO REQUISIÇÕES DO FRONTEND NO VERCEL)
+app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // **⚠️ Use o domínio do frontend para maior segurança**
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 app.use(bodyParser.json());
 
@@ -32,7 +33,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-// 🔥 Rota de Chat (Corrigida)
+// 🔥 Rota de Chat com CORS corretamente configurado
 app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
