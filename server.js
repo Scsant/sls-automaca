@@ -64,4 +64,25 @@ app.post("/chat", async (req, res) => {
 
     // 🔥 Envia a mensagem para a IA
     const result = await model.generateContent(message);
-   
+    const response = await result.response;
+    const text = response.text();
+
+    // 🔥 Salva no MongoDB Atlas
+    const interaction = new Interaction({
+      userMessage: message,
+      botResponse: text,
+    });
+
+    await interaction.save();
+    console.log("💾 Interação salva no banco de dados!");
+
+    res.json({ reply: text });
+  } catch (error) {
+    console.error("Erro ao conectar com a API Gemini:", error);
+    res.status(500).json({ reply: "Erro ao obter resposta da IA." });
+  }
+});
+
+// 🔥 Servidor rodando
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🔥 Servidor rodando na porta ${PORT}`));
