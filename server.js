@@ -16,18 +16,17 @@ db.once("open", () => console.log("✅ Conectado ao MongoDB Atlas!"));
 
 const app = express();
 
-// ✅ CORS Configurado corretamente!
+// ✅ Configuração correta do CORS
 const allowedOrigins = [
   "https://sls-automaca-git-main-socrates-luiz-dos-santos-projects.vercel.app",
-  "https://sls-automaca.vercel.app",
-  "https://sls-automaca-pl6zmh55f-socrates-luiz-dos-santos-projects.vercel.app/"
+  "https://sls-automaca.vercel.app"
 ];
 
 app.use(
   cors({
-    origin: allowedOrigins, // Permite apenas os domínios especificados
-    methods: "GET, POST, OPTIONS",
-    allowedHeaders: "Content-Type, Authorization",
+    origin: allowedOrigins, // Permite apenas esses domínios
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
@@ -54,7 +53,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-// 🔥 Rota de Chat com CORS corrigido
+// 🔥 Rota do Chat
 app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;

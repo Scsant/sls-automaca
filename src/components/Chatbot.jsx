@@ -11,26 +11,34 @@ const Chatbot = () => {
 
   const toggleChat = () => setIsOpen(!isOpen);
 
+
+  const API_URL = "https://sls-automaca-git-main-socrates-luiz-dos-santos-projects.vercel.app/chat";
+
   const sendMessage = async () => {
     if (!input.trim()) return;
-
+    
     const newMessages = [...messages, { text: input, sender: "user" }];
     setMessages(newMessages);
     setInput("");
 
     try {
-      const response = await fetch("https://sls-automaca-aqaaq0wak-socrates-luiz-dos-santos-projects.vercel.app/chat", {
+    const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
-      });
+    });
 
-      const data = await response.json();
-      setMessages([...newMessages, { text: data.reply, sender: "bot" }]);
-    } catch (error) {
-      setMessages([...newMessages, { text: "Erro ao conectar à IA!", sender: "bot" }]);
+    if (!response.ok) {
+        throw new Error("Erro na resposta da API");
     }
-  };
+
+    const data = await response.json();
+    setMessages([...newMessages, { text: data.reply, sender: "bot" }]);
+    } catch (error) {
+    console.error("Erro ao conectar à IA!", error);
+    setMessages([...newMessages, { text: "Erro ao conectar à IA!", sender: "bot" }]);
+    }
+    };
 
   return (
     <>
