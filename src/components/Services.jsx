@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import BackgroundImage from "../assets/post_automacao.jpg"; // 🔥 Imagem de fundo adicionada
+import BackgroundImage from "../assets/post_automacao.jpg"; 
 import { useNavigate } from "react-router-dom"; 
 
 const services = [
@@ -13,9 +13,15 @@ const Services = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const navigate = useNavigate();
 
+  // ✅ Adicionamos esta variável ANTES do return!
+  const serviceRoutes = {
+    1: "/automacao-processos",
+    2: "/dashboards-interativos",
+    3: "/integracoes-sistemas", // 🔥 Página ainda será criada
+  };
+
   return (
     <section id="services" style={styles.container}>
-      {/* 🔥 Imagem de Fundo */}
       <div style={{ ...styles.backgroundOverlay, backgroundImage: `url(${BackgroundImage})` }}></div>
 
       <h2 style={styles.title}>⚙️ Nossos Serviços</h2>
@@ -40,7 +46,7 @@ const Services = () => {
               boxShadow: "0px 10px 25px rgba(255, 152, 0, 0.7)",
             }}
             transition={{ duration: 0.3 }}
-            onClick={() => navigate("/automacao-processos")}
+            onClick={() => navigate(serviceRoutes[service.id])} // ✅ Agora funciona sem erro!
           >
             <h3 style={styles.cardTitle}>{service.title}</h3>
             <p style={styles.cardText}>{service.description}</p>
@@ -49,7 +55,7 @@ const Services = () => {
       </motion.div>
     </section>
   );
-};
+}
 
 const styles = {
   container: {

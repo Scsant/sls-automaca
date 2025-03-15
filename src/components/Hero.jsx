@@ -27,7 +27,7 @@ const Hero = () => {
         alt="Automação RPA"
         style={styles.overlayImage}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.8 }} // 🔥 Mantém a imagem com 80% de transparência
+        animate={{ opacity: 0.6 }} // 🔥 Mantém a imagem com 80% de transparência
         transition={{ duration: 1, delay: 0.5 }}
       />
 
@@ -35,7 +35,7 @@ const Hero = () => {
       <motion.div
         style={styles.textContainer}
         initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 0.8, y: 0 }}
         transition={{ duration: 0.8 }}
       >
         <h1 style={styles.title}>Aumente sua produtividade</h1>

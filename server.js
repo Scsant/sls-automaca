@@ -19,11 +19,10 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => console.log("✅ Conectado ao MongoDB Atlas!"))
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ Conectado ao MongoDB Atlas!"))
   .catch(err => console.error("❌ Erro ao conectar ao MongoDB:", err));
+
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 

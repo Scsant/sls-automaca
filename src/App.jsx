@@ -10,6 +10,7 @@ import Contact from "./components/Contact";
 import ContextPage from "./pages/ContextPage";
 import AutomacaoProcessos from "./pages/AutomacaoProcessos";
 import Chatbot from "./components/Chatbot";
+import DashboardsInterativos from "./pages/DashboardsInterativos";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         }/>
         <Route path="/contexto" element={<ContextPage />} />
         <Route path="/automacao-processos" element={<AutomacaoProcessos />} />
+        <Route path="/dashboards-interativos" element={<DashboardsInterativos />} />
       </Routes>
       <Chatbot />
     </>
