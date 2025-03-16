@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FaPaperPlane } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { FaRobot, FaTimes, FaPaperPlane } from "react-icons/fa";
 import IAImage from "../assets/ia.jpg";
 
 const Chatbot = () => {
@@ -11,42 +11,45 @@ const Chatbot = () => {
 
   const toggleChat = () => setIsOpen(!isOpen);
 
-  // ✅ Corrigido: URL correta da API
-  const API_URL = "http://localhost:5000/chat";
+
+  const API_URL = "https://siteserver.vercel.app";
 
   const sendMessage = async () => {
     if (!input.trim()) return;
-
+    
     const newMessages = [...messages, { text: input, sender: "user" }];
     setMessages(newMessages);
     setInput("");
 
     try {
-      const response = await fetch(API_URL, {
+    const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
-      });
+    });
 
-      if (!response.ok) {
+    if (!response.ok) {
         throw new Error("Erro na resposta da API");
-      }
-
-      const data = await response.json();
-      setMessages((prevMessages) => [...prevMessages, { text: data.reply, sender: "bot" }]);
-    } catch (error) {
-      console.error("Erro ao conectar à IA!", error);
-      setMessages((prevMessages) => [...prevMessages, { text: "Erro ao conectar à IA!", sender: "bot" }]);
     }
-  };
+
+    const data = await response.json();
+    setMessages([...newMessages, { text: data.reply, sender: "bot" }]);
+    } catch (error) {
+    console.error("Erro ao conectar à IA!", error);
+    setMessages([...newMessages, { text: "Erro ao conectar à IA!", sender: "bot" }]);
+    }
+    };
 
   return (
     <>
       {/* Botão flutuante */}
       <button 
         onClick={toggleChat} 
-        style={styles.floatingButton}
+        style={styles.floatingButton} 
+        onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
       ></button>
+
 
       {/* Chatbox */}
       {isOpen && (
@@ -77,24 +80,28 @@ const Chatbot = () => {
   );
 };
 
-// 🎨 Estilos do Chatbot
 const styles = {
   floatingButton: {
     position: "fixed",
     bottom: "20px",
     right: "20px",
-    width: "120px",
+    width: "120px", // 🔥 Ajuste conforme necessário
     height: "50px",
-    backgroundImage: `url(${IAImage})`,
+    backgroundImage: `url(${IAImage})`, // 🔥 Caminho da imagem
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     border: "none",
-    borderRadius: "30px",
+    borderRadius: "30px", // 🔥 Formato pílula
     cursor: "pointer",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
     transition: "0.3s ease-in-out",
-  },
+    },
+
+    floatingButtonHover: {
+    transform: "scale(1.05)", // 🔥 Aumenta um pouco ao passar o mouse
+    },
+    
 
   chatContainer: {
     position: "fixed",
@@ -107,6 +114,7 @@ const styles = {
     overflow: "hidden",
     display: "flex",
     flexDirection: "column",
+    animation: "fadeIn 0.3s ease-in-out",
   },
 
   chatHeader: {
